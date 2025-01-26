@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Docker Hub credentials
-source ./ .env
+# # Docker Hub credentials
+# source ./ .env
 
 # Local path where CSV file will be saved
 OUTPUT_CSV="./dockerhub_logs.csv"  # Change this to your desired path
@@ -32,7 +32,7 @@ check_dockerhub_cli() {
 # Function to log in to Docker Hub
 dockerhub_login() {
     echo "Logging in to Docker Hub..."
-    echo "$DOCKERHUB_PASSWORD" | dockerhub login -u "$DOCKERHUB_USERNAME" --password-stdin
+    echo "${{ secrets.DOCKERHUB_PASSWORD }}" | dockerhub login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
     if [ $? -eq 0 ]; then
         echo "Login successful."
     else
