@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Docker Hub credentials
-source .env
+source ./ .env
 
 # Local path where CSV file will be saved
 OUTPUT_CSV="./dockerhub_logs.csv"  # Change this to your desired path
