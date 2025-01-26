@@ -23,6 +23,10 @@ jobs:
           chmod +x dockerhub
           sudo mv dockerhub /usr/local/bin/
 
+      - name: Docker Hub login
+        run: |
+          echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+
       - name: Set execute permissions for the script
         run: chmod +x ./monitor_dockerhub.sh
 
