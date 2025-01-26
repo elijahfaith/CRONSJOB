@@ -41,3 +41,9 @@ jobs:
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }} # Make sure this is the correct secret
         run: |
           ./monitor_dockerhub.sh
+
+      - name: Upload DockerHub Logs CSV
+        uses: actions/upload-artifact@v3
+        with:
+          name: dockerhub-logs
+          path: ./dockerhub_logs.csv

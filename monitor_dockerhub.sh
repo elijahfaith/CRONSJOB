@@ -44,7 +44,7 @@ dockerhub_login() {
 }
 
 # Function to monitor repository logs and save them to CSV
-# Function to monitor repository logs and save them to CSV
+
 monitor_logs() {
     # Create the folder if it doesn't exist
     mkdir -p "$OUTPUT_DIR"
