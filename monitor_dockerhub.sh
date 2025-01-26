@@ -55,7 +55,9 @@ monitor_logs() {
     echo "Fetching repositories..."
 
     # Fetch list of repositories for the user
-    REPOSITORIES=$(dockerhub repos list --format '{{.Name}}')
+    # REPOSITORIES=$(dockerhub repos list --format '{{.Name}}')
+    REPOSITORIES=$(curl -s -H "Authorization: JWT ${DOCKER_TOKEN}" https://hub.docker.com/v2/repositories/${DOCKER_USERNAME}/?page_size=100 | jq -r '.results|.[]|.name')
+
 
     # Check if fetching repositories was successful
     if [ $? -ne 0 ]; then
