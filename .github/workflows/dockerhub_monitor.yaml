@@ -1,6 +1,9 @@
 name: Monitor DockerHub Repositories
 
 on:
+  push:
+    branches:
+      - master
   schedule:
     # Runs the job at the specified times (UTC)
     - cron: "0 * * * *" # Every hour
