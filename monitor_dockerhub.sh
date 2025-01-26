@@ -73,14 +73,13 @@ monitor_logs() {
     while IFS= read -r REPO; do
         echo "Logs for repository: $REPO"
         
-        # Get details for the specific repository and format with jq
-        LOG_DETAILS=$(dockerhub repos get "$DOCKERHUB_USERNAME/$REPO" | jq -r '.')
-        
+          REPO_DETAILS=$(curl -s -H "Authorization: JWT ${DOCKER_TOKEN}" https://hub.docker.com/v2/repositories/${DOCKER_USERNAME}/${REPO}/tags/?page_size=10)
+
         # Escape double quotes and commas for CSV formatting
-        LOG_DETAILS=$(echo "$LOG_DETAILS" | sed 's/"/""/g' | sed 's/,/;/g')
+        REPO_DETAILS=$(echo "$REPO_DETAILS" | jq -r '.results[] | .name' | sed 's/"/""/g' | sed 's/,/;/g')
 
         # Append the repository and its log details to the CSV file
-        echo "$REPO,\"$LOG_DETAILS\"" >> "$OUTPUT_CSV"
+        echo "$REPO,\"$REPO_DETAILS\"" >> "$OUTPUT_CSV"
         echo "-----------------------------------"
     done <<< "$REPOSITORIES"
 }
