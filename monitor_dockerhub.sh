@@ -26,16 +26,12 @@ check_dockerhub_cli() {
     fi
 }
 
-# Function to log in to Docker Hub using Docker CLI
-dockerhub_login() {
-    echo "Logging in to Docker Hub..."
-    
-   # Function to log in to Docker Hub using Docker CLI
+# Function to log in to Docker Hub using Docker Hub CLI
 dockerhub_login() {
     echo "Logging in to Docker Hub..."
     
     # Use the environment variables for username and password
-    echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+    echo "$DOCKERHUB_PASSWORD" | dockerhub login -u "$DOCKERHUB_USERNAME" --password-stdin
     if [ $? -eq 0 ]; then
         echo "Login successful."
     else
@@ -43,7 +39,7 @@ dockerhub_login() {
         exit 1
     fi
 }
-}
+
 # Function to monitor repository logs and save them to CSV
 monitor_logs() {
     # Create the folder if it doesn't exist
@@ -87,6 +83,7 @@ monitor_logs() {
     done <<< "$REPOSITORIES"
 }
 
+# Main script execution
 check_dockerhub_cli    # Check if Docker Hub CLI is installed and install it if necessary
-dockerhub_login        # Log in to Docker Hub
+dockerhub_login        # Log in to Docker Hub using Docker Hub CLI
 monitor_logs           # Run the monitoring process and save output to CSV
