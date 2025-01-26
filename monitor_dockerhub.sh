@@ -31,7 +31,7 @@ dockerhub_login() {
     echo "Logging in to Docker Hub..."
     
     # Use the environment variables for username and password
-    echo "$DOCKERHUB_PASSWORD" | dockerhub login -u "$DOCKERHUB_USERNAME" --password-stdin
+    echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
     if [ $? -eq 0 ]; then
         echo "Login successful."
     else

@@ -38,6 +38,6 @@ jobs:
       - name: Run monitoring script
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }} # Make sure this is the correct secret
-          DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }} # Make sure this is the correct secret
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }} # Make sure this is the correct secret
         run: |
           ./monitor_dockerhub.sh
