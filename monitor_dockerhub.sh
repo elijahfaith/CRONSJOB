@@ -1,8 +1,11 @@
 #!/bin/bash
 
 # Local path where CSV file will be saved
+mkdir -p "$OUTPUT_DIR"
 OUTPUT_CSV="./dockerhub_logs.csv"  # Change this to your desired path
 OUTPUT_DIR=$(dirname "$OUTPUT_CSV")
+
+
 
 # Function to check if Docker Hub CLI is installed
 check_dockerhub_cli() {
