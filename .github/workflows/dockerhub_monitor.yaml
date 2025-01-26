@@ -1,0 +1,28 @@
+name: Monitor DockerHub Repositories
+
+on:
+  schedule:
+    # Runs the job at the specified times (UTC)
+    - cron: "0 * * * *" # Every hour
+  workflow_dispatch: # Allows manual trigger of the workflow
+
+jobs:
+  monitor-dockerhub:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Hub CLI
+        run: |
+          curl -L https://github.com/rofrischmann/docker-hub-cli/releases/latest/download/docker-hub-cli-linux -o dockerhub
+          chmod +x dockerhub
+          sudo mv dockerhub /usr/local/bin/
+
+      - name: Run monitoring script
+        env:
+          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
+          DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+        run: |
+          ./monitor_dockerhub.sh
