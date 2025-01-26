@@ -26,6 +26,9 @@ jobs:
       - name: Set execute permissions for the script
         run: chmod +x ./monitor_dockerhub.sh
 
+      - name: Show monitor_dockerhub.sh contents
+        run: cat ./monitor_dockerhub.sh
+
       - name: Run monitoring script
         env:
           DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
