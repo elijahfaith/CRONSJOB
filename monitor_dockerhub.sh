@@ -26,12 +26,12 @@ check_dockerhub_cli() {
     fi
 }
 
-# Function to log in to Docker Hub
+# Function to log in to Docker Hub using Docker CLI
 dockerhub_login() {
     echo "Logging in to Docker Hub..."
     
-    # Using the environment variables set in GitHub Actions
-    echo "$DOCKERHUB_PASSWORD" | dockerhub login -u "$DOCKERHUB_USERNAME" --password-stdin
+    # Use Docker CLI for login
+    echo "$DOCKERHUB_PASSWORD" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
     if [ $? -eq 0 ]; then
         echo "Login successful."
     else
