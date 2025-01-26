@@ -87,6 +87,3 @@ monitor_logs() {
 check_dockerhub_cli    # Check if Docker Hub CLI is installed and install it if necessary
 dockerhub_login        # Log in to Docker Hub using Docker Hub CLI
 monitor_logs           # Run the monitoring process and save output to CSV
-
-
-
