@@ -41,6 +41,7 @@ dockerhub_login() {
 }
 
 # Function to monitor repository logs and save them to CSV
+# Function to monitor repository logs and save them to CSV
 monitor_logs() {
     # Create the folder if it doesn't exist
     mkdir -p "$OUTPUT_DIR"
@@ -54,10 +55,8 @@ monitor_logs() {
 
     echo "Fetching repositories..."
 
-    # Fetch list of repositories for the user
-    # REPOSITORIES=$(dockerhub repos list --format '{{.Name}}')
+    # Fetch list of repositories for the user using the Docker Hub API
     REPOSITORIES=$(curl -s -H "Authorization: JWT ${DOCKER_TOKEN}" https://hub.docker.com/v2/repositories/${DOCKER_USERNAME}/?page_size=100 | jq -r '.results|.[]|.name')
-
 
     # Check if fetching repositories was successful
     if [ $? -ne 0 ]; then
@@ -68,12 +67,22 @@ monitor_logs() {
     echo "Repositories found: "
     echo "$REPOSITORIES"
 
-    # Loop through each repository and fetch its log details
+    # Loop through each repository and fetch its log details via API
     echo "Fetching log details for each repository..."
     while IFS= read -r REPO; do
         echo "Logs for repository: $REPO"
         
-          REPO_DETAILS=$(curl -s -H "Authorization: JWT ${DOCKER_TOKEN}" https://hub.docker.com/v2/repositories/${DOCKER_USERNAME}/${REPO}/tags/?page_size=10)
+        # Get repository details using the Docker Hub API (replace with appropriate endpoint)
+        REPO_DETAILS=$(curl -s -H "Authorization: JWT ${DOCKER_TOKEN}" https://hub.docker.com/v2/repositories/${DOCKER_USERNAME}/${REPO}/tags/?page_size=10)
+
+        # Debug: Print the raw response from the API to check what's returned
+        echo "Raw API response for $REPO: $REPO_DETAILS"
+
+        # Check if the response is empty or invalid
+        if [ -z "$REPO_DETAILS" ] || [ "$REPO_DETAILS" == "null" ]; then
+            echo "No log details found for repository $REPO"
+            continue
+        fi
 
         # Escape double quotes and commas for CSV formatting
         REPO_DETAILS=$(echo "$REPO_DETAILS" | jq -r '.results[] | .name' | sed 's/"/""/g' | sed 's/,/;/g')
@@ -83,6 +92,7 @@ monitor_logs() {
         echo "-----------------------------------"
     done <<< "$REPOSITORIES"
 }
+
 
 # Main script execution
 check_dockerhub_cli    # Check if Docker Hub CLI is installed and install it if necessary
