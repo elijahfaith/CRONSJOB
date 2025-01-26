@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# # Docker Hub credentials
-# source ./ .env
-
 # Local path where CSV file will be saved
 OUTPUT_CSV="./dockerhub_logs.csv"  # Change this to your desired path
 OUTPUT_DIR=$(dirname "$OUTPUT_CSV")
@@ -16,7 +13,7 @@ check_dockerhub_cli() {
         # Install Docker Hub CLI
         curl -L https://github.com/rofrischmann/docker-hub-cli/releases/latest/download/docker-hub-cli-linux -o dockerhub
         chmod +x dockerhub
-        mv dockerhub /usr/local/bin/
+        sudo mv dockerhub /usr/local/bin/
 
         if command -v dockerhub &> /dev/null; then
             echo "Docker Hub CLI successfully installed."
@@ -32,7 +29,9 @@ check_dockerhub_cli() {
 # Function to log in to Docker Hub
 dockerhub_login() {
     echo "Logging in to Docker Hub..."
-    echo "${{ secrets.DOCKERHUB_PASSWORD }}" | dockerhub login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+    
+    # Using the environment variables set in GitHub Actions
+    echo "$DOCKERHUB_PASSWORD" | dockerhub login -u "$DOCKERHUB_USERNAME" --password-stdin
     if [ $? -eq 0 ]; then
         echo "Login successful."
     else
@@ -83,7 +82,6 @@ monitor_logs() {
         echo "-----------------------------------"
     done <<< "$REPOSITORIES"
 }
-
 
 check_dockerhub_cli    # Check if Docker Hub CLI is installed and install it if necessary
 dockerhub_login        # Log in to Docker Hub
