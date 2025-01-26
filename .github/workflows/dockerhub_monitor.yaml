@@ -26,8 +26,8 @@ jobs:
       - name: Log in to Docker Hub
         uses: docker/login-action@f4ef78c080cd8ba55a85445d5b36e214a81df20a
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          username: ${{ secrets.DOCKER_USERNAME }} # Correct secret name
+          password: ${{ secrets.DOCKER_PASSWORD }} # Correct secret name
 
       - name: Set execute permissions for the script
         run: chmod +x ./monitor_dockerhub.sh
@@ -37,7 +37,7 @@ jobs:
 
       - name: Run monitoring script
         env:
-          DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-          DOCKERHUB_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }}
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }} # Make sure this is the correct secret
+          DOCKER_PASSWORD: ${{ secrets.DOCKERHUB_PASSWORD }} # Make sure this is the correct secret
         run: |
           ./monitor_dockerhub.sh
