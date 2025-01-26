@@ -48,7 +48,7 @@ monitor_logs() {
 
     # Create the CSV file and add a header if it doesn't exist
     if [ ! -f "$OUTPUT_CSV" ]; then
-        echo "Repository,Log Details" > "$OUTPUT_CSV"  # Create the file and add headers
+        echo "Repository,Tag Name,Last Pushed,Last Pulled,Architecture,Size (bytes)" > "$OUTPUT_CSV"  # Create the file and add headers
     else
         echo "Appending to existing log file."
     fi
@@ -84,14 +84,19 @@ monitor_logs() {
             continue
         fi
 
-        # Escape double quotes and commas for CSV formatting
-        REPO_DETAILS=$(echo "$REPO_DETAILS" | jq -r '.results[] | .name' | sed 's/"/""/g' | sed 's/,/;/g')
+        # Extract the tag details (name, last pushed, last pulled, etc.) from the API response
+        TAGS=$(echo "$REPO_DETAILS" | jq -r '.results[] | .name + "," + .tag_last_pushed + "," + .tag_last_pulled + "," + .images[0].architecture + "," + (.images[0].size|tostring)')
 
-        # Append the repository and its log details to the CSV file
-        echo "$REPO,\"$REPO_DETAILS\"" >> "$OUTPUT_CSV"
+        # Loop through tags and save the details to the CSV
+        while IFS= read -r TAG; do
+            # Append the repository and its tag details to the CSV file
+            echo "$REPO,$TAG" >> "$OUTPUT_CSV"
+        done <<< "$TAGS"
+
         echo "-----------------------------------"
     done <<< "$REPOSITORIES"
 }
+
 
 
 # Main script execution
