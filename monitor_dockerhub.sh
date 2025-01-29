@@ -1,9 +1,10 @@
 #!/bin/bash
 
 # Local path where CSV file will be saved
-mkdir -p "$OUTPUT_DIR"
-OUTPUT_CSV="./dockerhub_logs.csv"  # Change this to your desired path
 OUTPUT_DIR=$(dirname "$OUTPUT_CSV")
+# mkdir -p "$OUTPUT_DIR"
+OUTPUT_CSV="./dockerhub_logs.csv"  # Change this to your desired path
+
 
 
 
