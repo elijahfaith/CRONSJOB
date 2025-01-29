@@ -5,11 +5,16 @@ from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
 import sys
+from datetime import datetime
+
+# this library helps to import the date and time
+timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
 
 sender_email = os.getenv("SENDER_EMAIL")
 receiver_email = os.getenv("RECEIVER_EMAIL")
-subject = "Docker Hub Logs"
-body = "Hello,\n\nPlease find attached the Docker Hub logs.\n\nBest regards."
+subject = f"Docker Hub Logs - {timestamp}"
+body = f"Hello,\n\nPlease find attached the logs details for DockerHub Account.\nSenior Dev. \n DevOps Team\n\n Timestamp: {timestamp} \n Best regards."
 
 # Get the CSV file path passed from the Bash script
 csv_file = sys.argv[1]
