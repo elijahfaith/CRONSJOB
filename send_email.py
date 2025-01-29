@@ -14,7 +14,7 @@ timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 sender_email = os.getenv("SENDER_EMAIL")
 receiver_email = os.getenv("RECEIVER_EMAIL")
 subject = f"Docker Hub Logs - {timestamp}"
-body = f"Hello,\n\nPlease find attached the logs details for DockerHub Account.\nSenior Dev. \n DevOps Team\n\n Timestamp: {timestamp} \n Best regards."
+body = f"Hello,\n\nPlease find attached the logs details for DockerHub Account.\nSenior Dev. \n DevOps Team\n\n Timestamp: {timestamp} \n Best regards.."
 
 # Get the CSV file path passed from the Bash script
 csv_file = sys.argv[1]

@@ -50,7 +50,6 @@ jobs:
 
       - name: Send email with attachment
         run: |
-
           LATEST_CSV=$(ls -t dockerhub_logs_*.csv | head -n 1)
           echo "Sending email with attachment: $LATEST_CSV"   
           python send_email.py "$LATEST_CSV"
