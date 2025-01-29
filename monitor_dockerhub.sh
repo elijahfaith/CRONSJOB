@@ -108,6 +108,9 @@ check_dockerhub_cli    # Check if Docker Hub CLI is installed and install it if 
 dockerhub_login        # Log in to Docker Hub using Docker Hub CLI
 monitor_logs           # Run the monitoring process and save output to CSV
 
+echo "OUTPUT_CSV path: $OUTPUT_CSV"
+
+
 if [ ! -f "$OUTPUT_CSV" ]; then
     echo "Error: The file '$OUTPUT_CSV' does not exist."
     exit 1
@@ -115,4 +118,5 @@ else
     echo "File '$OUTPUT_CSV' found. Proceeding to send email."
 fi
 # Call the Python script to send the email with the CSV file
+cd "$GITHUB_WORKSPACE"
 python3 send_email.py "$OUTPUT_CSV"
