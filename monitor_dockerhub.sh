@@ -3,9 +3,11 @@
 # Local path where CSV file will be saved
 OUTPUT_DIR=$(dirname "$OUTPUT_CSV")
 # mkdir -p "$OUTPUT_DIR"
-OUTPUT_CSV="./dockerhub_logs.csv"  # Change this to your desired path
+#OUTPUT_CSV="./dockerhub_logs.csv"  # Change this to your desired path
 
 timestamp=$(date +"%Y-%m-%d_%H-%M-%S")
+#defining the new file name
+OUTPUT_CSV="$(pwd)/dockerhub_logs_$timestamp.csv"
 
 
 # Function to check if Docker Hub CLI is installed
@@ -118,8 +120,7 @@ else
     echo "File '$OUTPUT_CSV' found. Proceeding to send email."
 fi
 
-#defining the new file name
-OUTPUT_CSV="$(pwd)/dockerhub_logs_$timestamp.csv"
+
 
 # Rename the existing file
 mv "$(pwd)/dockerhub_logs.csv" "$OUTPUT_CSV"
