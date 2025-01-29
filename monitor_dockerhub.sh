@@ -118,5 +118,5 @@ else
     echo "File '$OUTPUT_CSV' found. Proceeding to send email."
 fi
 # Call the Python script to send the email with the CSV file
-cd "$GITHUB_WORKSPACE"
+OUTPUT_CSV="$(pwd)/dockerhub_logs.csv"
 python3 send_email.py "$OUTPUT_CSV"
