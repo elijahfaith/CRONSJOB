@@ -50,7 +50,7 @@ jobs:
 
       - name: Send email with attachment
         run: |
-          python send_email.py
+          python send_email.py './dockerhub_logs.csv'
         env:
           SENDER_EMAIL: ${{ secrets.SENDER_EMAIL }}
           RECEIVER_EMAIL: ${{ secrets.RECEIVER_EMAIL }}
