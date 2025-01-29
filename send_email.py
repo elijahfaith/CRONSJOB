@@ -37,7 +37,7 @@ msg["Subject"] = subject
 msg.attach(MIMEText(body, "plain"))
 
 # Attach the CSV file
-filename = f"{os.path.splitext(os.path.basename(csv_file))[0]}_{timestamp}.csv" #os.path.basename(csv_file)  # Extract the file name only
+filename = os.path.basename(csv_file)  # Extract the file name only
 with open(csv_file, "rb") as attachment:
     part = MIMEBase("application", "octet-stream")
     part.set_payload(attachment.read())

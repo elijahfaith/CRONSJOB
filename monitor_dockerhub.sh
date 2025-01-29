@@ -5,7 +5,7 @@ OUTPUT_DIR=$(dirname "$OUTPUT_CSV")
 # mkdir -p "$OUTPUT_DIR"
 OUTPUT_CSV="./dockerhub_logs.csv"  # Change this to your desired path
 
-
+timestamp=$(date +"%Y-%m-%d_%H-%M-%S")
 
 
 # Function to check if Docker Hub CLI is installed
@@ -117,6 +117,13 @@ if [ ! -f "$OUTPUT_CSV" ]; then
 else
     echo "File '$OUTPUT_CSV' found. Proceeding to send email."
 fi
-# Call the Python script to send the email with the CSV file
-OUTPUT_CSV="$(pwd)/dockerhub_logs.csv"
+
+#defining the new file name
+OUTPUT_CSV="$(pwd)/dockerhub_logs_$timestamp.csv"
+
+# Rename the existing file
+mv "$(pwd)/dockerhub_logs.csv" "$OUTPUT_CSV"
+
+# Call the Python script with the renamed file
 python3 send_email.py "$OUTPUT_CSV"
+
