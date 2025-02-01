@@ -6,7 +6,7 @@ on:
       - master
   schedule:
     # Runs the job at the specified times (UTC)
-    - cron: "* * * * *" # Every hour
+    - cron: "0 6 * * 4" # Every Thursday at 6am
   workflow_dispatch: # Allows manual trigger of the workflow
 
 jobs:
@@ -51,9 +51,3 @@ jobs:
           SENDER_EMAIL: ${{ secrets.SENDER_EMAIL }}
           RECEIVER_EMAIL: ${{ secrets.RECEIVER_EMAIL }}
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
-
-      - name: Upload DockerHub Logs CSV
-        uses: actions/upload-artifact@v3
-        with:
-          name: dockerhub-logs
-          path: "$LATEST_CSV"
